@@ -1,0 +1,46 @@
+{
+    "version": "0.0.1",
+    "name": "espocrm/file-storage",
+    "type": "library",
+    "keywords": ["filesystem", "espocrm", "storage"],
+    "homepage": "https://github.com/theBuzzyCoder/espocrm-file-storage-services",
+    "readme": "./README.md",
+    "time": "2020-02-06",
+    "authors": [
+        {
+            "name": "Karthik Bhat K",
+            "email": "theBuzzyCoder@gmail.com",
+            "homepage": "https://linkedin.com/in/theBuzzyCoder",
+            "role": "Senior Engineer"
+        }
+    ],
+    "description": "File Storage Services for EspoCRM",
+    "require": {
+        "league/flysystem": "^1.0",
+        "league/flysystem-aws-s3-v3": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "FileStorage\\": "src/",
+            "": "tests/"
+        }
+    },
+    "license": "proprietary",
+    "support": {
+        "email": "theBuzzyCoder@gmail.com",
+        "issues": "https://github.com/theBuzzyCoder/espocrm-file-storage-services/issues",
+        "source": "https://github.com/theBuzzyCoder/espocrm-file-storage-services"
+    },
+    "scripts": {
+        "test": [
+            "@composer install -a -o",
+            "./vendor/bin/phpunit -c phpunit.xml"
+        ]
+    },
+    "scripts-descriptions": {
+        "test": "Run all tests!"
+    }
+}
