@@ -5,8 +5,7 @@ namespace Espo\Modules\FileStorage\Core\Utils\Storage;
 use Espo\Core\Utils\Config;
 use Espo\Entities\Attachment;
 use Espo\Core\Exceptions\Error;
-
-require_once(__DIR__."Providers/packages/autoload.php");
+use League\Flysystem\Filesystem;
 
 class FlySystem  extends Base
 {
@@ -15,14 +14,7 @@ class FlySystem  extends Base
     private $fileSystem = null;
 
     const STORAGE_CLIENT_MAPS = [
-        "S3" => [
-            "Client" => "\\Aws\\S3\\S3Client",
-            "Adapter" => "\\League\\Flysystem\\AwsS3v3\\AwsS3Adapter"
-        ]
-    ];
-
-    const ALLOWED_STORAGE_SERVICES = [
-        "S3"
+        "S3" => "Espo\Modules\FileStorage\Core\Utils\Storage\Providers\Adapters\AwsS3"
     ];
 
     protected function getConfig()
@@ -32,49 +24,30 @@ class FlySystem  extends Base
 
     protected function checkService($serviceName): void
     {
-        if (!\in_array($serviceName, self::ALLOWED_STORAGE_SERVICES)) {
+        if (\array_key_exists($serviceName, self::ALLOWED_STORAGE_SERVICES) === false) {
             throw new Error("Unsupported: {$serviceName} Storage Service");
         }
     }
 
-    /**
-     * $client = new S3Client([
-     *       'credentials' => [
-     *           'key'    => 'your-key',
-     *           'secret' => 'your-secret'
-     *       ],
-     *       'region' => 'your-region',
-     *       'version' => 'latest|version',
-     *   ]);
-     */
-    protected function getClient($serviceName, ...$clientParams)
+    public function getFileSystem()
     {
-        $this->checkService($serviceName);
-
-        $className = self::STORAGE_CLIENT_MAPS[$serviceName]['Client'];
-        return new $className(...$clientParams);
-    }
-
-    /**
-     * $adapter = new AwsS3Adapter($client, 'your-bucket-name');
-     */
-    protected function getFlyAdapter(string $serviceName, array $clientParams, array $adapterParams)
-    {
-        $this->checkService($serviceName);
-        $client = $this->getClient($serviceName, ...$clientParams);
-
-        $className = self::STORAGE_CLIENT_MAPS[$serviceName]['Adapter'];
-        return new $className($client, ...$adapterParams);
-    }
-
-    public function setFileSystem(string $serviceName, array $clientParams, array $adapterParams)
-    {
-        $adapter = $this->getFlyAdapter($serviceName, $clientParams, $adapterParams);
-        $this->fileSystem = new League\Flysystem\Filesystem($adapter);
+        return $this->fileSystem;
     }
 
     protected function init()
     {
+        parent::init();
+        $serviceName = $this->getConfig()->get('defaultStorageService');
+        if (!$serviceName) {
+            throw new Error('defaultStorageService not provided in config.php');
+        }
+
+        $this->checkService($serviceName);
+
+        $className = self::STORAGE_CLIENT_MAPS[$serviceName];
+        $adapterManager = $className::getAdapter($this->getConfig());
+
+        $this->fileSystem = new FileSystem($adapter);
     }
 
     public function unlink(Attachment $attachment)

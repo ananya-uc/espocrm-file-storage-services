@@ -33,14 +33,14 @@
     "scripts": {
         "test": [
             "@composer install",
-            "./Providers/bin/phpunit -c phpunit.xml"
+            "./Providers/packages/bin/phpunit -c phpunit.xml"
         ]
     },
     "scripts-descriptions": {
         "test": "Run all tests!"
     },
     "config": {
-        "bin-dir": "Providers/bin",
+        "bin-dir": "Providers/packages/bin",
         "optimize-autoloader": true,
         "classmap-authoritative": true,
         "apcu-autoloader": true,
