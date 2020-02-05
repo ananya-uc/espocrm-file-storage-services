@@ -1,0 +1,5 @@
+{
+    "implementationClassNameMap": {
+        "FlySystem": "\\Espo\\Modules\\FileStorage\\Core\\Utils\\Storage\\FlySystem"
+    }
+}
