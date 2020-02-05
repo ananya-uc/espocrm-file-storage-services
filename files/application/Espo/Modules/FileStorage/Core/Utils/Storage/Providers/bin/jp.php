@@ -1,1 +1,0 @@
-../packages/mtdowling/jmespath.php/bin/jp.php
