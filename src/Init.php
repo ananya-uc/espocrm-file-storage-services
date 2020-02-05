@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__."/../vendor/autoload.php";
+require __DIR__."/Providers/packages/autoload.php";
 
 use League\Flysystem\AwsS3v3\AwsS3Adapter;
 use Aws\S3\S3Client;

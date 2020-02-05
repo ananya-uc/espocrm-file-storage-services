@@ -16,6 +16,8 @@
     ],
     "description": "File Storage Services for EspoCRM",
     "require": {
+        "php": ">=7.2",
+        "ext-apcu": "*",
         "league/flysystem": "^1.0",
         "league/flysystem-aws-s3-v3": "^1.0"
     },
@@ -36,11 +38,19 @@
     },
     "scripts": {
         "test": [
-            "@composer install -a -o",
-            "./vendor/bin/phpunit -c phpunit.xml"
+            "@composer install",
+            "./src/Providers/bin/phpunit -c phpunit.xml"
         ]
     },
     "scripts-descriptions": {
         "test": "Run all tests!"
+    },
+    "config": {
+        "bin-dir": "src/Providers/bin",
+        "optimize-autoloader": true,
+        "classmap-authoritative": true,
+        "apcu-autoloader": true,
+        "sort-packages": true,
+        "vendor-dir": "src/Providers/packages"
     }
 }
