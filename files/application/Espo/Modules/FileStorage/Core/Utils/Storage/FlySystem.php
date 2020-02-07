@@ -7,7 +7,7 @@ use Espo\Entities\Attachment;
 use Espo\Core\Exceptions\Error;
 use League\Flysystem\Filesystem;
 
-class FlySystem  extends Base
+class FlySystem extends Base
 {
     protected $dependencyList = ['config'];
 
@@ -52,10 +52,12 @@ class FlySystem  extends Base
 
     public function unlink(Attachment $attachment)
     {
+        $response = $this->filesystem->delete($path);
     }
 
     public function isFile(Attachment $attachment)
     {
+        return false;
     }
 
     public function getContents(Attachment $attachment)
@@ -70,21 +72,22 @@ class FlySystem  extends Base
 
     public function getLocalFilePath(Attachment $attachment)
     {
-        $sourceId = $attachment->getSourceId();
-        return 'data/upload/' . $sourceId;
+        $this->getFilePath($attachment);
     }
 
     protected function getFilePath(Attachment $attachment)
     {
+        $sourceId = $attachment->getSourceId();
+        return 'data/upload/' . $sourceId;
     }
 
     public function getDownloadUrl(Attachment $attachment)
     {
-        throw new Error();
+        return "https://s3.amazonaws.com/{$this->fileSystem->getAdapter()->getBucket()}/{$this->getFilePath($attachment)}";
     }
 
     public function hasDownloadUrl(Attachment $attachment)
     {
-        return false;
+        return true;
     }
 }
