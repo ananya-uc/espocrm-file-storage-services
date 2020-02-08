@@ -14,7 +14,9 @@ Add `$HOME/.local/bin` to `$PATH`.
 
 ```console
 $ export PATH=$PATH:$HOME/.local/bin
-$ pip3 install -U pip pipenv aws
+$ sudo apt install python3-pip
+$ sudo pip3 install --upgrade pip
+$ pip3 install pipenv aws
 $ pipenv install localstack requests
 $ export AWS_ACCESS_KEY_ID=foobar
 $ export AWS_SECRET_ACCESS_KEY=foobar
