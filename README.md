@@ -13,8 +13,8 @@ Use `localstack`. Don't use `sudo`.
 Add `$HOME/.local/bin` to `$PATH`.
 
 ```console
-$ export PATH=$HOME/.local/bin
-$ pip3 install -U pip pipenv aws-cli
+$ export PATH=$PATH:$HOME/.local/bin
+$ pip3 install -U pip pipenv aws
 $ pipenv install localstack requests
 $ export AWS_ACCESS_KEY_ID=foobar
 $ export AWS_SECRET_ACCESS_KEY=foobar
