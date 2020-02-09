@@ -1,0 +1,11 @@
+{
+    "name": "Espo S3 Connector",
+    "version": "0.0.1",
+    "acceptableVersions": [
+        ">=5.8.0"
+    ],
+    "releaseDate": "2020-02-01",
+    "author": "theBuzzyCoder",
+    "description": "AWS S3 Connector for EspoCRM",
+    "delete": []
+}
