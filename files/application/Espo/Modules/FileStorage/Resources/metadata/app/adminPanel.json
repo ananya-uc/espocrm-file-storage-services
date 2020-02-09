@@ -1,0 +1,13 @@
+{
+    "awsConsole": {
+        "label": "AWS Console",
+        "items": [
+            {
+                "url": "#Admin/integrations/name=AwsConsole",
+                "label": "Settings",
+                "description": "AWS Console Integration Settings"
+            }
+        ],
+        "order": 1203
+    }
+}

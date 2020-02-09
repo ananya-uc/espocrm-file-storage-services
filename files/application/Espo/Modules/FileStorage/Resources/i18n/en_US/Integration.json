@@ -5,13 +5,15 @@
         "awsSecretAccessKey": "AWS SECRET ACCESS KEY",
         "awsRegionName": "AWS REGION",
         "awsEndPointUrl": "AWS END POINT URL",
-        "awsDefaultS3Bucket": "AWS DEFAULT S3 BUCKET"
+        "awsDefaultS3Bucket": "AWS DEFAULT S3 BUCKET",
+        "awsS3Version": "S3 Version",
+        "awsSignatureVersion": "AWS Signing Signature Version"
     },
     "titles": {
-        "AWSConsoleSettings": "AWS Console Settings"
+        "AwsConsole": "AWS Console Settings"
     },
     "help": {
-        "AWSConsoleSettings": ""
+        "AwsConsole": "Some help"
     },
     "options": {
         "awsRegionName": {
@@ -36,6 +38,10 @@
             "eu-north-1": "Europe (Stockholm)",
             "me-south-1": "Middle East (Bahrain)",
             "sa-east-1": "South America (São Paulo)"
+        },
+        "awsSignatureVersion": {
+            "v2": "Signature Version 2 (v2)",
+            "v4": "Signature Version 4(v4)"
         }
     },
     "tooltips": {
@@ -44,6 +50,7 @@
         "awsSecretAccessKey": "The secret access key of the IAM User",
         "awsRegionName": "[Read more](https://docs.aws.amazon.com/general/latest/gr/s3.html)",
         "awsEndPointUrl": "Url used to access aws s3 through REST API. Read more [here](https://docs.aws.amazon.com/general/latest/gr/s3.html)",
-        "awsDefaultS3Bucket": "AWS DEFAULT S3 BUCKET"
+        "awsDefaultS3Bucket": "AWS DEFAULT S3 BUCKET",
+        "awsS3Version": "https://docs.aws.amazon.com/aws-sdk-php/v3/api/index.html"
     }
 }

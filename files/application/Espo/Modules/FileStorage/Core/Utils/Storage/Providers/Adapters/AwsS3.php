@@ -2,35 +2,74 @@
 
 namespace Espo\Modules\FileStorage\Core\Utils\Storage\Providers\Adapters;
 
-use Espo\Core\Utils\Config;
 use Aws\S3\S3Client;
+use Espo\Entities\Integration;
+use Espo\Core\Exception\Error;
 use League\Flysystem\AwsS3v3\AwsS3Adapter;
 
 class AwsS3
 {
     const DEFAULT_BUCKET = 'Crm';
 
-    /**
-     * $client = new S3Client([
-     *       'credentials' => [
-     *           'key'    => 'your-key',
-     *           'secret' => 'your-secret'
-     *       ],
-     *       'region' => 'your-region',
-     *       'version' => 'latest|version',
-     *   ]);
-     */
-    public static function getClient($config)
+    const AWS_INTEGRATION_ID = 'AwsConsole';
+
+    private $configurations = [];
+
+    private $enabled = false;
+
+    private $bucketName = null;
+
+    public function __construct(Integration $entity)
     {
-        return new S3Client($config->get('storageConfig.s3.config'));
+        $this->configurations = [
+            'version' => $entity->get('awsS3Version'),
+            'region' => $entity->get('awsRegionName'),
+            'signature_version' => $entity->get('awsSignatureVersion'),
+            'credentials' => [
+                'key' => $entity->get('awsAccessKeyId'),
+                'secret' => $entity->get('awsSecretAccessKey'),
+            ],
+        ];
+        $this->bucketName = $entity->get('awsDefaultS3Bucket');
+        $this->enabled = $entity->get('enabled');
     }
 
-    /**
-     * $adapter = new AwsS3Adapter($client, 'your-bucket-name');
-     */
-    public static function getAdapter($config)
+    public function getClient()
     {
-        $bucketName = $config->get('storageConfig.s3.bucketName', self::DEFAULT_BUCKET);
-        return new AwsS3Adapter(self::getClient(), $bucketName);
+        if (!$this->enabled) {
+            throw new Error('Aws Integration is not enabled');
+        }
+
+        if (empty($this->configurations)) {
+            throw new Error('Aws not configured');
+        }
+
+        return new S3Client($this->configurations);
+    }
+
+    public function getAdapter()
+    {
+        return new AwsS3Adapter($this->getClient(), $this->bucketName);
+    }
+
+    public function testConnection()
+    {
+        $status = false;
+        try {
+            $s3 = $this->getClient();
+        } catch (Error $error) {
+            return $status;
+        }
+
+        try {
+            $buckets = $s3->listBuckets();
+            $status = true;
+        } catch (CredentialsException $credentialsException) {
+            $GLOBALS['log']->error("Invalid Credentials, Reason: {$credentialsException->getMessage()}");
+        } catch (S3Exception $e) {
+            $GLOBALS['log']->error("S3 Exception: $e->getMessage()", $e->getTrace());
+        } finally {
+            return $status;
+        }
     }
 }

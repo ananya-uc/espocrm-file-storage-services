@@ -1,0 +1,3 @@
+{
+    "StorageServiceManager": "Espo\\Modules\\FileStorage\\Core\\Loaders\\StorageServiceManager"
+}

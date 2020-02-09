@@ -2,10 +2,10 @@
 
 namespace Espo\Modules\FileStorage\Core\Utils\Storage;
 
-use Espo\Core\Utils\Config;
 use Espo\Entities\Attachment;
 use Espo\Core\Exceptions\Error;
 use League\Flysystem\Filesystem;
+use Espo\Core\FileStorage\Storages\Base;
 
 class FlySystem extends Base
 {
@@ -14,7 +14,7 @@ class FlySystem extends Base
     private $fileSystem = null;
 
     const STORAGE_CLIENT_MAPS = [
-        "S3" => "Espo\Modules\FileStorage\Core\Utils\Storage\Providers\Adapters\AwsS3"
+        'AwsConsole' => "Espo\Modules\FileStorage\Core\Utils\Storage\Providers\Adapters\AwsS3",
     ];
 
     protected function getConfig()
@@ -78,7 +78,8 @@ class FlySystem extends Base
     protected function getFilePath(Attachment $attachment)
     {
         $sourceId = $attachment->getSourceId();
-        return 'data/upload/' . $sourceId;
+
+        return 'data/upload/'.$sourceId;
     }
 
     public function getDownloadUrl(Attachment $attachment)

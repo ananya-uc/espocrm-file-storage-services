@@ -1,0 +1,7 @@
+{
+    "fileStorageComposerVendorDir": {
+        "loaderClassName": "\\Espo\\Modules\\FileStorage\\Core\\Loaders\\Vendor",
+        "dependencyList": [],
+        "preload": true
+    }
+}

@@ -1,0 +1,85 @@
+{
+    "fields": {
+        "awsAccountId": {
+            "type": "varchar",
+            "maxLength": 35,
+            "required": true,
+            "tooltip": true
+        },
+        "awsAccessKeyId": {
+            "type": "password",
+            "maxLength": 255,
+            "required": true,
+            "tooltip": true
+        },
+        "awsSecretAccessKey": {
+            "type": "password",
+            "maxLength": 255,
+            "required": true,
+            "tooltip": true
+        },
+        "awsRegionName": {
+            "type": "enum",
+            "options": [
+                "us-east-2",
+                "us-east-1",
+                "us-west-1",
+                "us-west-2",
+                "ap-east-1",
+                "ap-south-1",
+                "ap-northeast-3",
+                "ap-northeast-2",
+                "ap-southeast-1",
+                "ap-southeast-2",
+                "ap-northeast-1",
+                "ca-central-1",
+                "eu-central-1",
+                "eu-west-1",
+                "eu-west-2",
+                "eu-west-3",
+                "eu-north-1",
+                "me-south-1",
+                "sa-east-1"
+            ],
+            "tooltip": true,
+            "maxLength": 25,
+            "isSorted": true,
+            "required": true,
+            "default": "us-east-1"
+        },
+        "awsEndPointUrl": {
+            "type": "url",
+            "maxLength": 255,
+            "default": null,
+            "required": true,
+            "tooltip": true
+        },
+        "awsDefaultS3Bucket": {
+            "type": "varchar",
+            "maxLength": 255,
+            "required": true,
+            "tooltip": true
+        },
+        "awsS3Version": {
+            "type": "date",
+            "required": false,
+            "tooltip": true,
+            "useNumericFormat": true,
+            "default": "2006-03-01"
+        },
+        "awsSignatureVersion": {
+            "type": "enum",
+            "required": false,
+            "tooltip": true,
+            "maxLength": 10,
+            "default": "v4",
+            "options": [
+                "v2",
+                "v4"
+            ]
+
+        }
+    },
+    "view": "file-storage:views/admin/integrations/aws-console/edit",
+    "allowUserAccounts": false
+}
